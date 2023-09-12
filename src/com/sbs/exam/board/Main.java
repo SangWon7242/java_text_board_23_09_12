@@ -8,10 +8,18 @@ public class Main {
 
     System.out.println("== 자바 텍스트 게시판 ==");
     System.out.println("== 프로그램 시작 ==");
-    System.out.printf("명령) ");
-    String cmd = sc.nextLine();
-    System.out.printf("입력 된 명령어 : %s\n", cmd);
-    System.out.println("== 프로그램 종료 ==");
+
+    while (true) {
+      System.out.printf("명령) ");
+      String cmd = sc.nextLine();
+
+      if(cmd.equals("exit")) {
+        System.out.println("프로그램을 종료합니다.");
+        break;
+      }
+
+      System.out.printf("입력 된 명령어 : %s\n", cmd);
+    }
 
     sc.close();
   }
