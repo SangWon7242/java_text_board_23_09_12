@@ -43,6 +43,8 @@ public class Main {
 
         Article article = new Article(id, title, content);
         lastArticle = article;
+        
+        articles.add(article); // list에 게시물 추가
 
         System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
       }
