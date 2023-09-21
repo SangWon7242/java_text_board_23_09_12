@@ -29,6 +29,8 @@ public class Main {
 
       Rq rq = new Rq(cmd);
 
+      Map<String, String> params = rq.getParams();
+
       if(rq.getUrlPath().equals("/usr/article/write")) {
         System.out.println("== 게시물 등록 ==");
         System.out.printf("제목 : ");
@@ -59,13 +61,21 @@ public class Main {
 
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
-
+        int id = Integer.parseInt(params.get("id"));
+        
+        // 게시물이 아예 없는 경우
         if(articles.isEmpty()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
 
-        Article article = articles.get(articles.size() - 1);
+        // 내가 입력한 id가 현재 게시물에 수량을 초과한 경우
+        if(id > articles.size()) {
+          System.out.println("해당 게시물은 존재하지 않습니다.");
+          continue;
+        }
+
+        Article article = articles.get(id - 1);
 
         System.out.println("== 게시물 상세보기 ==");
         System.out.printf("번호 : %d\n", article.id);
