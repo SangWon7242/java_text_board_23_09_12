@@ -40,38 +40,7 @@ public class Main {
         actionUsrArticleList(rq, articles);
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
-        if(params.containsKey("id") == false) {
-          System.out.println("id를 입력해주세요.");
-          continue;
-        }
-
-        int id = 0;
-
-        try {
-          id = Integer.parseInt(params.get("id"));
-        } catch (NumberFormatException e) {
-          System.out.println("id를 정수 형태로 입력해주세요.");
-          continue;
-        }
-
-        // 게시물이 아예 없는 경우
-        if(articles.isEmpty()) {
-          System.out.println("게시물이 존재하지 않습니다.");
-          continue;
-        }
-
-        // 내가 입력한 id가 현재 게시물에 수량을 초과한 경우
-        if(id > articles.size()) {
-          System.out.println("해당 게시물은 존재하지 않습니다.");
-          continue;
-        }
-
-        Article article = articles.get(id - 1);
-
-        System.out.println("== 게시물 상세보기 ==");
-        System.out.printf("번호 : %d\n", article.id);
-        System.out.printf("제목 : %s\n", article.title);
-        System.out.printf("내용 : %s\n", article.content);
+        actionUsrArticleDetail(rq, articles);
       }
       else if(rq.getUrlPath().equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
@@ -80,6 +49,38 @@ public class Main {
     }
 
     sc.close();
+  }
+
+  private static void actionUsrArticleDetail(Rq rq, List<Article> articles) {
+    Map<String, String> params = rq.getParams();
+
+    if(params.containsKey("id") == false) {
+      System.out.println("id를 입력해주세요.");
+      return;
+    }
+
+    int id = 0;
+
+    try {
+      id = Integer.parseInt(params.get("id"));
+    } catch (NumberFormatException e) {
+      System.out.println("id를 정수 형태로 입력해주세요.");
+      return;
+    }
+
+    // 게시물이 아예 없는 경우
+    // 내가 입력한 id가 현재 게시물에 수량을 초과한 경우
+    if(articles.isEmpty() || id > articles.size()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    Article article = articles.get(id - 1);
+
+    System.out.println("== 게시물 상세보기 ==");
+    System.out.printf("번호 : %d\n", article.id);
+    System.out.printf("제목 : %s\n", article.title);
+    System.out.printf("내용 : %s\n", article.content);
   }
 
   private static void actionUsrArticleWrite(Scanner sc, List<Article> articles, int articleLastId) {
