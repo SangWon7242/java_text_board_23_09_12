@@ -1,5 +1,7 @@
 package com.sbs.exam.board;
 
+import com.sbs.exam.board.container.Container;
+
 import java.util.*;
 
 public class Main {
@@ -13,7 +15,7 @@ public class Main {
     }
   }
   public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = Container.sc;
 
     makeTestDate();
 
@@ -33,7 +35,7 @@ public class Main {
       Map<String, String> params = rq.getParams();
 
       if(rq.getUrlPath().equals("/usr/article/write")) {
-        actionUsrArticleWrite(sc);
+        actionUsrArticleWrite();
       }
       else if(rq.getUrlPath().equals("/usr/article/list")) {
         actionUsrArticleList(rq);
@@ -42,7 +44,7 @@ public class Main {
         actionUsrArticleDetail(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/modify")) {
-        actionUsrArticleModify(sc, rq);
+        actionUsrArticleModify(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/delete")) {
         actionUsrArticleDelete(rq);
@@ -97,7 +99,7 @@ public class Main {
     System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
   }
 
-  private static void actionUsrArticleModify(Scanner sc, Rq rq) {
+  private static void actionUsrArticleModify(Rq rq) {
     Map<String, String> params = rq.getParams();
 
     if(params.containsKey("id") == false) {
@@ -134,9 +136,9 @@ public class Main {
     }
 
     System.out.printf("새 제목 : ");
-    foundArticle.title = sc.nextLine();
+    foundArticle.title = Container.sc.nextLine();
     System.out.printf("새 내용 : ");
-    foundArticle.content = sc.nextLine();
+    foundArticle.content = Container.sc.nextLine();
 
     System.out.printf("%d번 게시물이 수정되었습니다.\n", foundArticle.id);
   }
@@ -185,13 +187,13 @@ public class Main {
     System.out.printf("내용 : %s\n", foundArticle.content);
   }
 
-  private static void actionUsrArticleWrite(Scanner sc) {
+  private static void actionUsrArticleWrite() {
     System.out.println("== 게시물 등록 ==");
     System.out.printf("제목 : ");
-    String title = sc.nextLine();
+    String title = Container.sc.nextLine();
 
     System.out.printf("내용 : ");
-    String content = sc.nextLine();
+    String content = Container.sc.nextLine();
 
     int id = articleLastId + 1;
     articleLastId = id;
