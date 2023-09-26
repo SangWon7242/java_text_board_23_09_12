@@ -55,9 +55,28 @@ public class Main {
         System.out.println("번호 / 제목");
         System.out.println("-------------------");
 
-        // articles에는 현재 정렬이 안된, 즉 1 ~ 3순으로 들어있는 리모콘의 복사본이 들어있다.
-        // 그 리모콘의 복사본을 sortedArticles한테 연결시켜 줌.
-        List<Article> sortedArticles = articles;
+        // 검색 시작
+        List<Article> filteredArticles = articles;
+
+        if(params.containsKey("searchKeyword")) {
+          String searchKeyword = params.get("searchKeyword");
+
+          filteredArticles = new ArrayList<>();
+
+          for(Article article : articles) {
+            boolean matched = article.title.contains(searchKeyword) || article.content.contains(searchKeyword);
+
+            if(matched) {
+              filteredArticles.add(article);
+            }
+          }
+        }
+        // 검색 끝
+        
+        // 검색어가 없으면 filteredArticles는 articles랑 똑같다.
+        List<Article> sortedArticles = filteredArticles;
+        
+        // 정렬 로직 시작
         boolean orderByIdDesc = true;
 
         if(params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
@@ -70,7 +89,7 @@ public class Main {
 
         sortedArticles.stream()
             .forEach(article -> System.out.printf("%d / %s\n", article.id, article.title));
-
+        // 정렬 로직 끝
 
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
