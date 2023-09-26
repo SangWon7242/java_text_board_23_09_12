@@ -33,21 +33,8 @@ public class Main {
       Map<String, String> params = rq.getParams();
 
       if(rq.getUrlPath().equals("/usr/article/write")) {
-        System.out.println("== 게시물 등록 ==");
-        System.out.printf("제목 : ");
-        String title = sc.nextLine();
-
-        System.out.printf("내용 : ");
-        String content = sc.nextLine();
-
-        int id = articleLastId + 1;
-        articleLastId = id;
-
-        Article article = new Article(id, title, content);
-        
-        articles.add(article); // list에 게시물 추가
-
-        System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
+        actionUsrArticleWrite(sc, articles, articleLastId);
+        articleLastId++;
       }
       else if(rq.getUrlPath().equals("/usr/article/list")) {
         actionUsrArticleList(rq, articles);
@@ -93,6 +80,24 @@ public class Main {
     }
 
     sc.close();
+  }
+
+  private static void actionUsrArticleWrite(Scanner sc, List<Article> articles, int articleLastId) {
+    System.out.println("== 게시물 등록 ==");
+    System.out.printf("제목 : ");
+    String title = sc.nextLine();
+
+    System.out.printf("내용 : ");
+    String content = sc.nextLine();
+
+    int id = articleLastId + 1;
+    articleLastId = id;
+
+    Article article = new Article(id, title, content);
+
+    articles.add(article); // list에 게시물 추가
+
+    System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
 
   private static void actionUsrArticleList(Rq rq, List<Article> articles) {
