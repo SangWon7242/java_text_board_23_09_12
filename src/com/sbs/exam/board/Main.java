@@ -54,6 +54,9 @@ public class Main {
         System.out.println("번호 / 제목");
         System.out.println("-------------------");
 
+        // articles에는 현재 정렬이 안된, 즉 1 ~ 3순으로 들어있는 리모콘의 복사본이 들어있다.
+        // 그 리모콘의 복사본을 sortedArticles한테 연결시켜 줌.
+        List<Article> sortedArticles = articles;
         boolean orderByIdDesc = true;
 
         if(params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
@@ -61,20 +64,11 @@ public class Main {
         }
 
         if(orderByIdDesc) {
-          for(int i = articles.size() - 1; i >= 0; i--) {
-            Article article = articles.get(i);
-            System.out.printf("%d / %s\n", article.id, article.title);
-          }
+          sortedArticles = Util.reverseList(sortedArticles);
         }
-        else {
-          articles.stream()
-              .forEach(article -> System.out.printf("%d / %s\n", article.id, article.title));
-          /*
-          for(Article article : articles) {
-            System.out.printf("%d / %s\n", article.id, article.title);
-          }
-           */
-        }
+
+        sortedArticles.stream()
+            .forEach(article -> System.out.printf("%d / %s\n", article.id, article.title));
 
 
       }
@@ -185,5 +179,15 @@ class Util {
 
   static String getUrlPathFromUrl(String url) {
     return url.split("\\?", 2)[0];
+  }
+
+  // 이 함수는 원본리스트를 훼손하지 않고, 새 리스트를 만듭니다. 즉 정렬이 반대인 복사본리스트를 만들어서 반환합니다.
+  public static<T> List<T> reverseList(List<T> list) {
+    List<T> reverse = new ArrayList<>(list.size());
+
+    for ( int i = list.size() - 1; i >= 0; i-- ) {
+      reverse.add(list.get(i));
+    }
+    return reverse;
   }
 }
