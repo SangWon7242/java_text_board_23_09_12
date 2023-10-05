@@ -7,7 +7,6 @@ import com.sbs.exam.board.container.Container;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UsrArticleController {
   private int articleLastId;
@@ -24,7 +23,7 @@ public class UsrArticleController {
     }
   }
 
-  void makeTestDate() {
+  public void makeTestDate() {
     // 테스트 게시물을 100개로 늘림.
     for(int i = 1; i <= 100; i++ ) {
       articles.add(new Article(i, "제목" + i, "내용" + i));
