@@ -7,12 +7,21 @@ import java.util.Scanner;
 public class App {
   public void run() {
     Scanner sc = Container.sc;
+    Session session = Container.getSession();
 
     System.out.println("== 자바 텍스트 게시판 ==");
     System.out.println("== 프로그램 시작 ==");
 
     while (true) {
-      System.out.printf("명령) ");
+      Member loginedMember = (Member) session.getAttribute("loginedMember");
+
+      String promptName = "명령";
+
+      if(loginedMember != null) {
+        promptName = loginedMember.loginId;
+      }
+
+      System.out.printf("%s) ", promptName);
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);
