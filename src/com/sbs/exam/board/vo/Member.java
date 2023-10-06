@@ -1,16 +1,32 @@
-package com.sbs.exam.board;
+package com.sbs.exam.board.vo;
 
 public class Member {
-  public int id;
-  public String loginId;
-  public String loginPw;
-  public String name;
+  private int id;
+  private String loginId;
+  private String loginPw;
+  private String name;
 
   public Member(int id, String loginId, String loginPw, String name) {
     this.id = id;
     this.loginId = loginId;
     this.loginPw = loginPw;
     this.name = name;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getLoginId() {
+    return loginId;
+  }
+
+  public String getLoginPw() {
+    return loginPw;
+  }
+
+  public String getName() {
+    return name;
   }
 
   @Override

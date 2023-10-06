@@ -1,7 +1,7 @@
 package com.sbs.exam.board.controller;
 
-import com.sbs.exam.board.Member;
-import com.sbs.exam.board.Rq;
+import com.sbs.exam.board.vo.Member;
+import com.sbs.exam.board.vo.Rq;
 import com.sbs.exam.board.container.Container;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class UsrMemberController {
     makeTestDate();
 
     if(members.size() > 0) {
-      memberLastId = members.get(members.size() - 1).id;
+      memberLastId = members.get(members.size() - 1).getId();
     }
   }
 
@@ -31,13 +31,13 @@ public class UsrMemberController {
   public void actionJoin(Rq rq) {
     System.out.println("== 회원 가입 ==");
     System.out.printf("로그인 아이디 : ");
-    String loginId = Container.sc.nextLine();
+    String loginId = Container.getSc().nextLine();
 
     System.out.printf("로그인 패스워드 : ");
-    String loginPw = Container.sc.nextLine();
+    String loginPw = Container.getSc().nextLine();
 
     System.out.printf("로그인 패스워드 확인 : ");
-    String loginPwConfirm = Container.sc.nextLine();
+    String loginPwConfirm = Container.getSc().nextLine();
 
     if(loginPw.equals(loginPwConfirm) == false) {
       System.out.println("비밀번호가 일치하지 않습니다.");
@@ -45,7 +45,7 @@ public class UsrMemberController {
     }
 
     System.out.printf("이름 : ");
-    String name = Container.sc.nextLine();
+    String name = Container.getSc().nextLine();
 
     int id = ++memberLastId;
 
@@ -53,7 +53,7 @@ public class UsrMemberController {
 
     members.add(member);
 
-    System.out.printf("\"%s\"님 회원 가입을 환영합니다.\n", member.name);
+    System.out.printf("\"%s\"님 회원 가입을 환영합니다.\n", member.getName());
   }
 
   public void actionLogin(Rq rq) {
@@ -89,7 +89,7 @@ public class UsrMemberController {
       return;
     }
 
-    if(member.loginPw.equals(loginPw) == false) {
+    if(member.getLoginPw().equals(loginPw) == false) {
       System.out.println("로그인 패스워드가 일치하지 않습니다.");
       System.out.println("다시 확인 후 입력해주세요.");
       return;
@@ -97,12 +97,12 @@ public class UsrMemberController {
 
     rq.setSessionAttr("loginedMember", member);
 
-    System.out.printf("\"%s\"님 환영합니다.\n", member.name);
+    System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
   }
 
   private Member getMemberLoginId(String loginId) {
     for(Member member : members) {
-      if(member.loginId.equals(loginId)) {
+      if(member.getLoginId().equals(loginId)) {
         return member;
       }
     }

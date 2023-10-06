@@ -1,12 +1,15 @@
 package com.sbs.exam.board;
 
 import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.session.Session;
+import com.sbs.exam.board.vo.Member;
+import com.sbs.exam.board.vo.Rq;
 
 import java.util.Scanner;
 
 public class App {
   public void run() {
-    Scanner sc = Container.sc;
+    Scanner sc = Container.getSc();
     Session session = Container.getSession();
 
     System.out.println("== 자바 텍스트 게시판 ==");
@@ -18,7 +21,7 @@ public class App {
       String promptName = "명령";
 
       if(loginedMember != null) {
-        promptName = loginedMember.loginId;
+        promptName = loginedMember.getLoginId();
       }
 
       System.out.printf("%s) ", promptName);
