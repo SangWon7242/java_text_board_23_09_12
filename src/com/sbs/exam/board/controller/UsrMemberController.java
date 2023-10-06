@@ -57,9 +57,7 @@ public class UsrMemberController {
   }
 
   public void actionLogin(Rq rq) {
-
-    boolean isLogined = rq.hasSessionAttr("loginedMember");
-    if (isLogined) {
+    if (rq.isLogined()) {
       System.out.println("이미 로그인 되어 있습니다.");
       System.out.println("로그아웃 후 이용해주세요.");
       return;
@@ -95,7 +93,7 @@ public class UsrMemberController {
       return;
     }
 
-    rq.setSessionAttr("loginedMember", member);
+    rq.login(member);
 
     System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
   }
@@ -111,14 +109,12 @@ public class UsrMemberController {
   }
 
   public void actionLogout(Rq rq) {
-    boolean isLogout = rq.hasSessionAttr("loginedMember");
-
-    if (!isLogout) {
+    if (rq.isLogined() == false) {
       System.out.println("이미 로그아웃 상태입니다.");
       return;
     }
 
-    rq.removeSessionAttr("loginedMember");
+    rq.logout();
     System.out.println("로그아웃 되었습니다.");
   }
 }

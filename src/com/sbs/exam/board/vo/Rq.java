@@ -11,6 +11,10 @@ public class Rq {
   public Map<String, String> params;
   public String urlPath;
 
+  public Rq() {
+
+  }
+
   public Rq(String url) {
     this.url = url;
     params = Util.getParamsFromUrl(url);
@@ -55,8 +59,34 @@ public class Rq {
     return session.hasAttribute(key);
   }
 
+  public Object getSessionAttr(String key) {
+    Session session = Container.getSession();
+    return session.getAttribute(key);
+  }
+
   public void setSessionAttr(String key, Member value) {
     Session session = Container.getSession();
     session.setAttribute(key, value);
+  }
+
+  public Member getLoginedMember() {
+    return (Member) getSessionAttr("loginedMember");
+  }
+
+  public boolean isLogined() {
+    return hasSessionAttr("loginedMember");
+  }
+
+  public void login(Member member) {
+    setSessionAttr("loginedMember", member);
+  }
+
+  public void logout() {
+    removeSessionAttr("loginedMember");
+  }
+
+  public void setCommand(String url) {
+    params = Util.getParamsFromUrl(url);
+    urlPath = Util.getUrlPathFromUrl(url);
   }
 }
