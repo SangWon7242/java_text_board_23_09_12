@@ -10,11 +10,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
+  private void forTestLoginByMemberId(int id) {
+    Member member = Container.getMemberService().getMemberById(id);
+    new Rq().login(member);
+  }
+  
   public void run() {
     Scanner sc = Container.getSc();
 
     System.out.println("== 자바 텍스트 게시판 ==");
     System.out.println("== 프로그램 시작 ==");
+    
+    // 프로그램 실행이 되자마자 회원 1번이 로그인 될 수 있게끔
+    forTestLoginByMemberId(1);
 
     while (true) {
       Rq rq = new Rq();
