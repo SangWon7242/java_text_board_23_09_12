@@ -52,10 +52,6 @@ public class ArticleRepository {
     return sortedArticles;
   }
 
-  public List<Article> getOriginArticles() {
-    return articles;
-  }
-
   public Article getArticleById(int id) {
     for(Article article : articles) {
       if(article.getId() == id) {

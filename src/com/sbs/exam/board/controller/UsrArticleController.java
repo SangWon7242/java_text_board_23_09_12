@@ -45,17 +45,9 @@ public class UsrArticleController {
 
   public void showDetail(Rq rq) {
     int id = rq.getIntParam("id", 0);
-    List<Article> articles = articleService.getOriginArticles();
 
     if(id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
-      return;
-    }
-
-    // 게시물이 아예 없는 경우
-    // 내가 입력한 id가 현재 게시물에 수량을 초과한 경우
-    if(articles.isEmpty() || id > articles.size()) {
-      System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
 
@@ -74,15 +66,9 @@ public class UsrArticleController {
 
   public void actionModify(Rq rq) {
     int id = rq.getIntParam("id", 0);
-    List<Article> articles = articleService.getOriginArticles();
 
     if(id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
-      return;
-    }
-
-    if(articles.isEmpty() || id > articles.size()) {
-      System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
 
@@ -103,15 +89,9 @@ public class UsrArticleController {
 
   public void actionDelete(Rq rq) {
     int id = rq.getIntParam("id", 0);
-    List<Article> articles = articleService.getOriginArticles();
 
     if(id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
-      return;
-    }
-
-    if(articles.isEmpty() || id > articles.size()) {
-      System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
 
