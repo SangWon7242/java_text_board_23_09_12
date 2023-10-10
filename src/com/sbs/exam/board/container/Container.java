@@ -3,8 +3,10 @@ package com.sbs.exam.board.container;
 import com.sbs.exam.board.interceptor.NeedLoginInterceptor;
 import com.sbs.exam.board.interceptor.NeedLogoutInterceptor;
 import com.sbs.exam.board.repository.ArticleRepository;
+import com.sbs.exam.board.repository.BoardRepository;
 import com.sbs.exam.board.repository.MemberRepository;
 import com.sbs.exam.board.service.ArticleService;
+import com.sbs.exam.board.service.BoardService;
 import com.sbs.exam.board.service.MemberService;
 import com.sbs.exam.board.session.Session;
 import com.sbs.exam.board.controller.UsrArticleController;
@@ -18,6 +20,9 @@ public class Container {
 
   private static NeedLoginInterceptor needLoginInterceptor;
   private static NeedLogoutInterceptor needLogoutInterceptor;
+
+  private static BoardRepository boardRepository;
+  private static BoardService boardService;
 
   private static ArticleRepository articleRepository;
   private static ArticleService articleService;
@@ -34,6 +39,9 @@ public class Container {
 
     needLoginInterceptor = new NeedLoginInterceptor();
     needLogoutInterceptor = new NeedLogoutInterceptor();
+
+    boardRepository = new BoardRepository();
+    boardService = new BoardService();
 
     articleRepository = new ArticleRepository();
     articleService = new ArticleService();
@@ -55,6 +63,14 @@ public class Container {
 
   public static NeedLogoutInterceptor getNeedLogoutInterceptor() {
     return needLogoutInterceptor;
+  }
+
+  public static BoardRepository getBoardRepository() {
+    return boardRepository;
+  }
+
+  public static BoardService getBoardService() {
+    return boardService;
   }
 
   public static ArticleRepository getArticleRepository() {
