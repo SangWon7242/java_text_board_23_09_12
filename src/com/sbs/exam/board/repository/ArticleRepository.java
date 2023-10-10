@@ -1,5 +1,6 @@
 package com.sbs.exam.board.repository;
 
+import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 
 import java.util.ArrayList;
@@ -23,7 +24,35 @@ public class ArticleRepository {
     return id;
   }
 
-  public List<Article> getArticles() {
+  public List<Article> getArticles(String searchKeyword, String orderBy) {
+
+    // articles 1 ~ 100까지의 게시물 리스트 들어있다.
+    List<Article> filteredArticles = articles;
+
+    if(searchKeyword.length() > 0) {
+      filteredArticles = new ArrayList<>();
+
+      for(Article article : articles) {
+        boolean matched = article.getTitle().contains(searchKeyword) || article.getContent().contains(searchKeyword);
+
+        if(matched) {
+          filteredArticles.add(article);
+        }
+      }
+    }
+
+    List<Article> sortedArticles = filteredArticles;
+
+    boolean orderByIdDesc = orderBy.equals("idDesc");
+
+    if(orderByIdDesc) {
+      sortedArticles = Util.reverseList(sortedArticles);
+    }
+
+    return sortedArticles;
+  }
+
+  public List<Article> getOriginArticles() {
     return articles;
   }
 

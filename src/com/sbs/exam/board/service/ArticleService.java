@@ -21,8 +21,12 @@ public class ArticleService {
     }
   }
 
-  public List<Article> getArticles() {
-    return articleRepository.getArticles();
+  public List<Article> getArticles(String searchKeyword, String orderBy) {
+    return articleRepository.getArticles(searchKeyword, orderBy);
+  }
+
+  public List<Article> getOriginArticles() {
+    return articleRepository.getOriginArticles();
   }
 
   public int write(String title, String content) {

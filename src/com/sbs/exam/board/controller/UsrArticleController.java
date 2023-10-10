@@ -2,20 +2,16 @@ package com.sbs.exam.board.controller;
 
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.service.ArticleService;
-import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.vo.Rq;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UsrArticleController {
   private ArticleService articleService;
-  private List<Article> articles;
 
   public UsrArticleController() {
     articleService = Container.getArticleService();
-    articles = articleService.getArticles();
     articleService.makeTestDate();
   }
 
@@ -33,48 +29,23 @@ public class UsrArticleController {
   }
 
   public void showList(Rq rq) {
+    String searchKeyword = rq.getParam("searchKeyword", "");
+    String orderBy = rq.getParam("orderBy", "idDesc");
+
     System.out.println("== 게시물 리스트 ==");
     System.out.println("-------------------");
     System.out.println("번호 / 제목");
     System.out.println("-------------------");
 
-    String searchKeyword = rq.getParam("searchKeyword", "");
+    List<Article> articles = articleService.getArticles(searchKeyword, orderBy);
 
-    // 검색 시작
-    List<Article> filteredArticles = articleService.getArticles();
-
-    if(searchKeyword.length() > 0) {
-
-      filteredArticles = new ArrayList<>();
-
-      for(Article article : articles) {
-        boolean matched = article.getTitle().contains(searchKeyword) || article.getContent().contains(searchKeyword);
-
-        if(matched) {
-          filteredArticles.add(article);
-        }
-      }
-    }
-    // 검색 끝
-
-    // 검색어가 없으면 filteredArticles는 articles랑 똑같다.
-    List<Article> sortedArticles = filteredArticles;
-
-    // 정렬 로직 시작
-    String orderBy = rq.getParam("orderBy", "idDesc");
-    boolean orderByIdDesc = orderBy.equals("idDesc");
-
-    if(orderByIdDesc) {
-      sortedArticles = Util.reverseList(sortedArticles);
-    }
-
-    sortedArticles.stream()
+    articles.stream()
         .forEach(article -> System.out.printf("%d / %s\n", article.getId(), article.getTitle()));
-    // 정렬 로직 끝
   }
 
   public void showDetail(Rq rq) {
     int id = rq.getIntParam("id", 0);
+    List<Article> articles = articleService.getOriginArticles();
 
     if(id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
@@ -103,6 +74,7 @@ public class UsrArticleController {
 
   public void actionModify(Rq rq) {
     int id = rq.getIntParam("id", 0);
+    List<Article> articles = articleService.getOriginArticles();
 
     if(id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
@@ -131,6 +103,7 @@ public class UsrArticleController {
 
   public void actionDelete(Rq rq) {
     int id = rq.getIntParam("id", 0);
+    List<Article> articles = articleService.getOriginArticles();
 
     if(id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
