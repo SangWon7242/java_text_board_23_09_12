@@ -35,7 +35,7 @@ public class UsrArticleController {
       return;
     }
 
-    System.out.printf("== %s 게시판 작성 ==", board.getName());
+    System.out.printf("== %s 게시판 작성 ==\n", board.getName());
     System.out.printf("제목 : ");
     String title = Container.getSc().nextLine();
 
@@ -79,6 +79,7 @@ public class UsrArticleController {
     }
 
     System.out.println("== 게시물 상세보기 ==");
+    System.out.printf("게시판 : %d\n", article.getBoardId());
     System.out.printf("번호 : %d\n", article.getId());
     System.out.printf("제목 : %s\n", article.getTitle());
     System.out.printf("내용 : %s\n", article.getContent());

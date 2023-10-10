@@ -24,4 +24,15 @@ public class BoardRepository {
 
     return null;
   }
+
+  public int make(String code, String name) {
+    int id = lastId + 1;
+    String regDate = "2023-10-10 09:41:33";
+    String updateDate = regDate;
+    Board board = new Board(id, regDate, updateDate, name, code);
+    boards.add(board);
+    lastId = id;
+
+    return id;
+  }
 }

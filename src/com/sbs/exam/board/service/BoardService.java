@@ -8,6 +8,17 @@ public class BoardService {
   private BoardRepository boardRepository;
   public BoardService() {
     boardRepository = Container.getBoardRepository();
+
+    makeTestDate();
+  }
+
+  public void makeTestDate() {
+    make("notice", "공지사항");
+    make("free", "자유");
+  }
+
+  private int make(String code, String name) {
+    return boardRepository.make(code, name);
   }
 
   public Board getBoardById(int boardId) {
