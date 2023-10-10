@@ -1,31 +1,15 @@
 package com.sbs.exam.board.controller;
 
+import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.service.MemberService;
 import com.sbs.exam.board.vo.Member;
 import com.sbs.exam.board.vo.Rq;
-import com.sbs.exam.board.container.Container;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UsrMemberController {
-  private int memberLastId;
-  private List<Member> members;
+  private MemberService memberService;
 
   public UsrMemberController() {
-    memberLastId = 0;
-    members = new ArrayList<>();
-
-    makeTestDate();
-
-    if(members.size() > 0) {
-      memberLastId = members.get(members.size() - 1).getId();
-    }
-  }
-
-  public void makeTestDate() {
-    for(int i = 1; i <= 3; i++ ) {
-      members.add(new Member(i, "user" + i, "user" + i, "홍길동" + i));
-    }
+    memberService = Container.getMemberService();
   }
 
   public void actionJoin(Rq rq) {
@@ -47,13 +31,9 @@ public class UsrMemberController {
     System.out.printf("이름 : ");
     String name = Container.getSc().nextLine();
 
-    int id = ++memberLastId;
+    memberService.join(loginId, loginPw, name);
 
-    Member member = new Member(id, loginId, loginPw, name);
-
-    members.add(member);
-
-    System.out.printf("\"%s\"님 회원 가입을 환영합니다.\n", member.getName());
+    System.out.printf("\"%s\"님 회원 가입을 환영합니다.\n", name);
   }
 
   public void actionLogin(Rq rq) {
@@ -72,7 +52,7 @@ public class UsrMemberController {
       return;
     }
 
-    Member member = getMemberLoginId(loginId);
+    Member member = memberService.getMemberLoginId(loginId);
 
     if(member == null) {
       System.out.println("해당 아이디는 존재하지 않습니다.");
@@ -96,16 +76,6 @@ public class UsrMemberController {
     rq.login(member);
 
     System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
-  }
-
-  private Member getMemberLoginId(String loginId) {
-    for(Member member : members) {
-      if(member.getLoginId().equals(loginId)) {
-        return member;
-      }
-    }
-
-    return null;
   }
 
   public void actionLogout(Rq rq) {
