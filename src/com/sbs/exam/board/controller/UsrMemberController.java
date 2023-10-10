@@ -37,15 +37,9 @@ public class UsrMemberController {
   }
 
   public void actionLogin(Rq rq) {
-    if (rq.isLogined()) {
-      System.out.println("이미 로그인 되어 있습니다.");
-      System.out.println("로그아웃 후 이용해주세요.");
-      return;
-    }
-
     System.out.println("== 로그인 ==");
     System.out.printf("로그인 아이디 : ");
-    String loginId = Container.sc.nextLine();
+    String loginId = Container.getSc().nextLine();
 
     if(loginId.trim().length() == 0) {
       System.out.println("로그인 아이디를 입력해주세요.");
@@ -60,7 +54,7 @@ public class UsrMemberController {
     }
 
     System.out.printf("로그인 패스워드 : ");
-    String loginPw = Container.sc.nextLine();
+    String loginPw = Container.getSc().nextLine();
 
     if(loginPw.trim().length() == 0) {
       System.out.println("로그인 패스워드를 입력해주세요.");
@@ -79,11 +73,6 @@ public class UsrMemberController {
   }
 
   public void actionLogout(Rq rq) {
-    if (rq.isLogined() == false) {
-      System.out.println("이미 로그아웃 상태입니다.");
-      return;
-    }
-
     rq.logout();
     System.out.println("로그아웃 되었습니다.");
   }

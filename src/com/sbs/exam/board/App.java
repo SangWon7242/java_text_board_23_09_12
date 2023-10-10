@@ -1,9 +1,12 @@
 package com.sbs.exam.board;
 
 import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.interceptor.Interceptor;
 import com.sbs.exam.board.vo.Member;
 import com.sbs.exam.board.vo.Rq;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -27,29 +30,33 @@ public class App {
 
       rq.setCommand(cmd);
 
+      if(runInterceptor(rq) == false) {
+        continue;
+      }
+
       if(rq.getUrlPath().equals("/usr/article/write")) {
-        Container.usrArticleController.actionWrite(rq);
+        Container.getUsrArticleController().actionWrite(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/list")) {
-        Container.usrArticleController.showList(rq);
+        Container.getUsrArticleController().showList(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
-        Container.usrArticleController.showDetail(rq);
+        Container.getUsrArticleController().showDetail(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/modify")) {
-        Container.usrArticleController.actionModify(rq);
+        Container.getUsrArticleController().actionModify(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/delete")) {
-        Container.usrArticleController.actionDelete(rq);
+        Container.getUsrArticleController().actionDelete(rq);
       }
       else if(rq.getUrlPath().equals("/usr/member/join")) {
-        Container.usrMemberController.actionJoin(rq);
+        Container.getUsrMemberController().actionJoin(rq);
       }
       else if(rq.getUrlPath().equals("/usr/member/login")) {
-        Container.usrMemberController.actionLogin(rq);
+        Container.getUsrMemberController().actionLogin(rq);
       }
       else if(rq.getUrlPath().equals("/usr/member/logout")) {
-        Container.usrMemberController.actionLogout(rq);
+        Container.getUsrMemberController().actionLogout(rq);
       }
       else if(rq.getUrlPath().equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
@@ -58,5 +65,20 @@ public class App {
     }
 
     sc.close();
+  }
+
+  private boolean runInterceptor(Rq rq) {
+    List<Interceptor> interceptors = new ArrayList<>();
+
+    interceptors.add(Container.getNeedLoginInterceptor());
+    interceptors.add(Container.getNeedLogoutInterceptor());
+
+    for(Interceptor interceptor : interceptors) {
+      if(interceptor.run(rq) == false) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
