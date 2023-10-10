@@ -2,17 +2,23 @@ package com.sbs.exam.board.vo;
 
 public class Article {
   private int id;
+  private int boardId;
   private String title;
   private String content;
 
-  public Article(int id, String title, String content) {
+  public Article(int id, int boardId, String title, String content) {
     this.id = id;
+    this.boardId = boardId;
     this.title = title;
     this.content = content;
   }
 
   public int getId() {
     return id;
+  }
+
+  public int getBoardId() {
+    return boardId;
   }
 
   public String getTitle() {
@@ -37,6 +43,11 @@ public class Article {
 
   @Override
   public String toString() {
-    return String.format("{id : %d, title : \"%s\", content : \"%s\"}", id, title, content);
+    return "Article{" +
+        "id=" + id +
+        ", boardId=" + boardId +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        '}';
   }
 }

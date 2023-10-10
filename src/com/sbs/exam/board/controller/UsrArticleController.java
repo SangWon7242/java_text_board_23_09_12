@@ -23,7 +23,7 @@ public class UsrArticleController {
     System.out.printf("내용 : ");
     String content = Container.getSc().nextLine();
 
-    int id = articleService.write(title, content);
+    int id = articleService.write(1, title, content);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
