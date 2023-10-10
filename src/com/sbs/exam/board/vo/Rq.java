@@ -89,4 +89,8 @@ public class Rq {
     params = Util.getParamsFromUrl(url);
     urlPath = Util.getUrlPathFromUrl(url);
   }
+
+  public int getLoginedMemberId() {
+    return getLoginedMember().getId();
+  }
 }

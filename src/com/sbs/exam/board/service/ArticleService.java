@@ -17,7 +17,7 @@ public class ArticleService {
     for(int i = 1; i <= 100; i++ ) {
       String title = "제목" + i;
       String content = "내용" + i;
-      write(1, title, content);
+      write(1, 1, title, content);
     }
   }
 
@@ -25,8 +25,8 @@ public class ArticleService {
     return articleRepository.getArticles(searchKeyword, orderBy);
   }
 
-  public int write(int boardId, String title, String content) {
-    return articleRepository.write(boardId, title, content);
+  public int write(int boardId, int memberId, String title, String content) {
+    return articleRepository.write(boardId, memberId, title, content);
   }
 
   public Article getArticleById(int id) {

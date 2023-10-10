@@ -14,7 +14,7 @@ public class App {
     Member member = Container.getMemberService().getMemberById(id);
     new Rq().login(member);
   }
-  
+
   public void run() {
     Scanner sc = Container.getSc();
 
